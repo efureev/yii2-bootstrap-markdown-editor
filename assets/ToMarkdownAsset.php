@@ -6,11 +6,9 @@ use yii\web\AssetBundle;
 
 class ToMarkdownAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/to-markdown/src';
-    public $js = [
-        'to-markdown.js',
-    ];
-    public $depends = [
-        'uran1980\yii\widgets\markdown\assets\HeAsset',
-    ];
+	public $sourcePath = '@bower/to-markdown/dist';
+
+	public $js = [
+		'to-markdown.js',
+	];
 }

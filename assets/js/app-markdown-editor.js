@@ -1,58 +1,52 @@
 var appMdEditor = appMdEditor || {};
 
 !(function ($) {
-    "use strict";
+	"use strict";
 
-    $(document).ready(function () {
-        /***********************************************************************
-         *                              METHODS
-         **********************************************************************/
-        appMdEditor.fixPreviewButton = function (e) {
-            var previewButtonIcon = $(e.$textarea)
-                    .closest('div')
-                    .find('button[data-handler="bootstrap-markdown-cmdPreview"] span')
-            ;
+	$(document).ready(function () {
+		/***********************************************************************
+		 *                              METHODS
+		 **********************************************************************/
+		appMdEditor.fixPreviewButton = function (e) {
+			var previewButtonIcon = $(e.$textarea)
+					.closest('div')
+					.find('button[data-handler="bootstrap-markdown-cmdPreview"] span')
+				;
 
-            if ( true === e.$isPreview ) {
-                previewButtonIcon
-                    .removeClass('glyphicon-search, glyphicon-eye-open')
-                    .addClass('glyphicon-eye-close')
-                ;
-            } else {
-                previewButtonIcon
-                    .removeClass('glyphicon-search, glyphicon-eye-close')
-                    .addClass('glyphicon-eye-open')
-                ;
-            }
-        };
+			if (true === e.$isPreview) {
+				previewButtonIcon
+					.removeClass('glyphicon-search, glyphicon-eye-open')
+					.addClass('glyphicon-eye-close')
+				;
+			} else {
+				previewButtonIcon
+					.removeClass('glyphicon-search, glyphicon-eye-close')
+					.addClass('glyphicon-eye-open')
+				;
+			}
+		};
 
-        /***********************************************************************
-         *                          EVENTS HANDLER
-         **********************************************************************/
-        appMdEditor.eventsHandler = function () {
-            $('body').delegate('button[data-handler="bootstrap-markdown-cmdPreview"]', 'click', function () {
-                var $mdEditor = $(this).closest('.md-editor'),
-                    offset    = $mdEditor.offset(),
-                    position  = offset['top'] - 100
-                ;
-                $.scrollTo(position, 'slow', {easing: 'easeOutCubic'});
+		/***********************************************************************
+		 *                          EVENTS HANDLER
+		 **********************************************************************/
+		appMdEditor.eventsHandler = function () {
+			$('body').on('click', 'button[data-handler="bootstrap-markdown-cmdPreview"]', function () {
+				if (typeof prettyPrint === 'function') {
+					setTimeout(function () {
+						var langClass = $(this).attr('class') || '';
+						$('code').parent('pre').addClass('prettyprint linenums ' + langClass);
+						prettyPrint();
+					}, 150);
+				}
+			});
+		};
 
-                if ( typeof prettyPrint === 'function' ) {
-                    window.setTimeout(function () {
-                        var langClass = $(this).attr('class') || '';
-                        $('code').parent('pre').addClass('prettyprint linenums ' + langClass);
-                        prettyPrint();
-                    }, 150);
-                }
-            });
-        };
-
-        /***********************************************************************
-         *                               INIT
-         **********************************************************************/
-        appMdEditor.init = function () {
-            appMdEditor.eventsHandler();
-        };
-        appMdEditor.init();
-    });
-})(window.jQuery);
+		/***********************************************************************
+		 *                               INIT
+		 **********************************************************************/
+		appMdEditor.init = function () {
+			appMdEditor.eventsHandler();
+		};
+		appMdEditor.init();
+	});
+})(jQuery);

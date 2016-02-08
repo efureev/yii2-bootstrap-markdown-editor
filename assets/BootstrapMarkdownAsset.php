@@ -4,39 +4,41 @@ namespace efureev\markdown\assets;
 
 use Yii;
 use yii\web\AssetBundle;
-use yii\helpers\ArrayHelper;
 
 class BootstrapMarkdownAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/bootstrap-markdown';
-    public $js = [
-        'js/bootstrap-markdown.js',
-    ];
-    public $css = [
-        'css/bootstrap-markdown.min.css',
-    ];
-    public $depends = [
-        'yii\web\JqueryAsset',
-        'yii\bootstrap\BootstrapAsset',
+	public $sourcePath = '@bower/bootstrap-markdown';
 
-        'uran1980\yii\widgets\markdown\assets\MarkedAsset',
-        'uran1980\yii\widgets\markdown\assets\ToMarkdownAsset',
-    ];
+	public $js = [
+		'js/bootstrap-markdown.js',
+	];
 
-    public function init()
-    {
-        $this->registerLocale();
+	public $css = [
+		'css/bootstrap-markdown.min.css',
+	];
 
-        parent::init();
-    }
+	public $depends = [
+		'yii\web\JqueryAsset',
+		'yii\bootstrap\BootstrapAsset',
 
-    public function registerLocale()
-    {
-        $localeAsset = 'locale/bootstrap-markdown.' . Yii::$app->language . '.js';
-        if ( file_exists(Yii::getAlias($this->sourcePath . '/' . $localeAsset)) ) {
-            $this->js[] = $localeAsset;
-        } else {
-            ArrayHelper::remove($this->clientOptions, 'language');
-        }
-    }
+		'efureev\markdown\assets\MarkedAsset',
+		'efureev\markdown\assets\ToMarkdownAsset'
+	];
+
+	public function init()
+	{
+		$this->registerLocale();
+
+		parent::init();
+	}
+
+	public function registerLocale()
+	{
+		$lang = preg_replace('/^([a-z]{2})(-[A-Za-z]{2})$/','$1',Yii::$app->language);
+		$localeAsset = 'locale/bootstrap-markdown.' . $lang . '.js';
+
+		if ( file_exists(Yii::getAlias($this->sourcePath . '/' . $localeAsset)) ) {
+			$this->js[] = $localeAsset;
+		}
+	}
 }

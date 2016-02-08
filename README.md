@@ -17,13 +17,13 @@ The preferred way to install this extension is through [Composer](http://getcomp
 Either run
 
 ```
-php composer.phar require uran1980/yii2-bootstrap-markdown-editor "dev-master"
+php composer.phar require efureev/yii2-bootstrap-markdown-editor "dev-master"
 ```
 
 or add
 
 ```
-"uran1980/yii2-bootstrap-markdown-editor": "dev-master"
+"efureev/yii2-bootstrap-markdown-editor": "dev-master"
 ```
 
 to the require section of your ```composer.json```
@@ -39,7 +39,7 @@ In view in active form:
 <?php
 
 use yii\widgets\ActiveForm;
-use uran1980\yii\widgets\markdown\MarkdownEditor;
+use efureev\markdown\MarkdownEditor;
 ?>
 
 <div class="active-form">
@@ -59,7 +59,7 @@ In view:
 
 ```php
 <?php
-use uran1980\yii\widgets\markdown\MarkdownEditor;
+use efureev\markdown\MarkdownEditor;
 
 echo MarkdownEditor::widget([
     'name'          => 'md-editor',
@@ -79,3 +79,4 @@ echo MarkdownEditor::widget([
 
 ## Author
 [Ivan Yakovlev](https://github.com/uran1980/), e-mail: [uran1980@gmail.com](mailto:uran1980@gmail.com)
+[Eugene Fureev](https://github.com/efureev/), e-mail: [furegin@yandex.ru](mailto:furegin@yandex.ru)
