@@ -1,6 +1,8 @@
 <?php
 
-namespace uran1980\yii\widgets\markdown;
+namespace efureev\markdown;
+
+use efureev\markdown\assets\MarkdownEditorAsset;
 
 use Yii;
 use yii\helpers\Json;
@@ -8,7 +10,7 @@ use yii\web\AssetBundle;
 use yii\widgets\InputWidget;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use uran1980\yii\widgets\markdown\assets\MarkdownEditorAsset;
+
 
 class MarkdownEditor extends InputWidget
 {
@@ -18,7 +20,7 @@ class MarkdownEditor extends InputWidget
     public $clientOptions = [];
 
     /**
-     * @var \uran1980\yii\widgets\markdown\assets\MarkdownEditorAsset
+     * @var \efureev\markdown\assets\MarkdownEditorAsset
      */
     private $_assetBundle;
 
