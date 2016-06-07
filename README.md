@@ -45,8 +45,48 @@ use efureev\markdown\MarkdownEditor;
 <div class="active-form">
     <?php $form = ActiveForm::begin(); ?>
     <?php echo $form->field($model, 'content')->widget(MarkdownEditor::className(), [
-        'clientOptions' => ['language' => Yii::$app->language],
+        'clientOptions' => [
+            'language' => Yii::$app->language,
+            'additionalButtons' => [
+                'drink' => [
+                    'cmdBeer' => [
+                        'title' => 'Beer',
+                        'toggle' => false,
+                        'icon' => 'glyphicon glyphicon-glass',
+                        'callback' => 'function(e){alert("sdasda");}'
+                    ],
+                    'cmdBeer2' => [
+                        'title' => 'Beer2',
+                        'toggle' => true,
+                        'icon' => 'glyphicon glyphicon-glass',
+                        'callback' => 'function(e){
+                            // Replace selection with some drinks
+                            var chunk, cursor,
+                                selected = e.getSelection(), content = e.getContent(),
+                                drinks = ["Heinekken", "Budweiser",
+                                        "Iron City", "Amstel Light",
+                                        "Red Stripe", "Smithwicks",
+                                        "Westvleteren", "Sierra Nevada",
+                                        "Guinness", "Corona", "Calsberg"],
+                                index = Math.floor((Math.random()*10)+1)
+            
+            
+                              // Give random drink
+                              chunk = drinks[index]
+                
+                              // transform selection and set the cursor into chunked text
+                              e.replaceSelection(chunk)
+                              cursor = selected.start
+                
+                              // Set the cursor
+                              e.setSelection(cursor,cursor+chunk.length)
+                            }'
+                        ]
+                    ]
+                ]
+        ],
         'options'       => ['data-provider' => 'markdown'],
+        
     ]); ?>
     <?php ActiveForm::end(); ?>
 </div>
@@ -68,6 +108,14 @@ echo MarkdownEditor::widget([
     'options'       => ['data-provider' => 'markdown'],
 ]);
 ```
+
+
+## Changelog
+
+### v0.0.5
+
+- add `additionalButtons`
+
 
 
 ## See also

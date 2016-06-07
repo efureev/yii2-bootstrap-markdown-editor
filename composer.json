@@ -1,7 +1,7 @@
 {
   "name": "efureev/yii2-bootstrap-markdown-editor",
   "description": "Yii2 Markdown Editor based on Bootstrap Markdown.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "yii2-extension",
   "keywords": [
     "yii2",
@@ -37,7 +37,7 @@
     "yiisoft/yii2": "~2",
     "bower-asset/autosize": "*",
     "uran1980/yii2-code-prettify": "*",
-    "bower-asset/bootstrap-markdown": "2.*",
+    "bower-asset/bootstrap-markdown": "*",
     "bower-asset/marked": "*",
     "bower-asset/to-markdown": "*"
   },

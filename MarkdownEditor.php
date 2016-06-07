@@ -4,9 +4,9 @@ namespace efureev\markdown;
 
 use efureev\markdown\assets\MarkdownEditorAsset;
 
-use Yii;
 use yii\helpers\Json;
 use yii\web\AssetBundle;
+use yii\web\View;
 use yii\widgets\InputWidget;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -18,6 +18,9 @@ class MarkdownEditor extends InputWidget
      * @var array
      */
     public $clientOptions = [];
+
+    /** @var  array|null */
+    public $additionalButtons;
 
     /**
      * @var \efureev\markdown\assets\MarkdownEditorAsset
@@ -42,7 +45,7 @@ class MarkdownEditor extends InputWidget
     public function getClientOptionsDefaults()
     {
         return [
-            'language'  => Yii::$app->language,
+            'language' => \Yii::$app->language,
             'autofocus' => true,
         ];
     }
@@ -61,12 +64,56 @@ class MarkdownEditor extends InputWidget
         $this->_assetBundle = MarkdownEditorAsset::register($this->getView());
     }
 
+    private $_callback_replace_values = [];
+
+    public function registerAdditionalButtons()
+    {
+        if (empty($this->additionalButtons) || !is_array($this->additionalButtons))
+            return;
+
+        $groups = [];
+        foreach ($this->additionalButtons as $btnGroupName => $btnGroupData) {
+            $btns = [];
+            foreach ($btnGroupData as $btnName => $btnData) {
+                $btnData['name'] = $btnName;
+
+                if (!empty($btnData['callback'])) {
+                    if (strpos($btnData['callback'], 'function(') === 0) {
+                        $value = '%' . $btnGroupName . '_' . $btnName . '_callback%';
+                        $this->_callback_replace_values['"' . $value . '"'] = $btnData['callback'];
+                        $btnData['callback'] = $value;
+                    }
+                }
+
+                $btns[] = $btnData;
+
+            }
+
+            if (!count($btns))
+                continue;
+
+            $groups[] = [
+                'name' => $btnGroupName,
+                'data' => $btns
+            ];
+        }
+
+        $this->clientOptions['additionalButtons'] = [$groups];
+
+    }
+
     public function registerScript()
     {
+        $this->registerAdditionalButtons();
+
+        $this->clientOptions['additionalButtons'];
+
         $config = Json::encode(ArrayHelper::merge(
             $this->getClientOptionsDefaults(),
             $this->clientOptions
         ));
+
+        $config = str_replace(array_keys($this->_callback_replace_values), $this->_callback_replace_values, $config);
 
         $js = <<<SCRIPT
 !(function ($) {
@@ -80,7 +127,7 @@ class MarkdownEditor extends InputWidget
     }));
 })(window.jQuery);
 SCRIPT;
-        $this->getView()->registerJs($js, \yii\web\View::POS_READY);
+        $this->getView()->registerJs($js, View::POS_READY);
     }
 
     public function registerEvent()
@@ -95,7 +142,7 @@ SCRIPT;
     }
 
     /**
-     * @return \uran1980\yii\widgets\markdown\assets\MarkdownEditorAsset
+     * @return MarkdownEditorAsset
      */
     public function getAssetBundle()
     {

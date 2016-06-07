@@ -2,8 +2,6 @@
 
 namespace efureev\markdown\assets;
 
-use Yii;
-
 class TextareaAutosizeAsset extends \yii\web\AssetBundle
 {
 	public $sourcePath = '@bower/autosize/dist';
@@ -25,7 +23,7 @@ class TextareaAutosizeAsset extends \yii\web\AssetBundle
     });
 })(jQuery);
 JS;
-		Yii::$app->view->registerJs($js, \yii\web\View::POS_READY);
+		\Yii::$app->view->registerJs($js, \yii\web\View::POS_READY);
 
 		parent::init();
 	}

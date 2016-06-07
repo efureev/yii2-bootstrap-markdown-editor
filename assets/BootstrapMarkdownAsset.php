@@ -2,7 +2,6 @@
 
 namespace efureev\markdown\assets;
 
-use Yii;
 use yii\web\AssetBundle;
 
 class BootstrapMarkdownAsset extends AssetBundle
@@ -34,10 +33,10 @@ class BootstrapMarkdownAsset extends AssetBundle
 
 	public function registerLocale()
 	{
-		$lang = preg_replace('/^([a-z]{2})(-[A-Za-z]{2})$/','$1',Yii::$app->language);
+		$lang = preg_replace('/^([a-z]{2})(-[A-Za-z]{2})$/','$1',\Yii::$app->language);
 		$localeAsset = 'locale/bootstrap-markdown.' . $lang . '.js';
 
-		if ( file_exists(Yii::getAlias($this->sourcePath . '/' . $localeAsset)) ) {
+		if ( file_exists(\Yii::getAlias($this->sourcePath . '/' . $localeAsset)) ) {
 			$this->js[] = $localeAsset;
 		}
 	}
