@@ -22,6 +22,15 @@ class MarkdownEditor extends InputWidget
     /** @var  array|null */
     public $additionalButtons;
 
+    /** @var string Icon library: fa | glyph | octicons  */
+    public $icons = 'glyph';
+
+    private $iconsLibs = [
+        'glyph' => 'glyphicon',
+        'fa' => 'fa',
+        'octicons' => 'octicons'
+    ];
+
     /**
      * @var \efureev\markdown\assets\MarkdownEditorAsset
      */
@@ -106,6 +115,11 @@ class MarkdownEditor extends InputWidget
     {
         $this->registerAdditionalButtons();
 
+        $this->clientOptions['iconlibrary'] = $this->icons;
+        unset($this->iconsLibs[$this->icons]);
+
+        $this->clientOptions['iconlibraryOff'] = array_values($this->iconsLibs);
+
         $config = Json::encode(ArrayHelper::merge(
             $this->getClientOptionsDefaults(),
             $this->clientOptions
@@ -151,4 +165,3 @@ SCRIPT;
         return $this->_assetBundle;
     }
 }
-

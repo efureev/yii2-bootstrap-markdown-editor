@@ -112,6 +112,10 @@ echo MarkdownEditor::widget([
 
 ## Changelog
 
+### v0.0.6
+
+- add `icons`
+
 ### v0.0.5
 
 - add `additionalButtons`

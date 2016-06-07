@@ -10,18 +10,20 @@ var appMdEditor = appMdEditor || {};
 		appMdEditor.fixPreviewButton = function (e) {
 			var previewButtonIcon = $(e.$textarea)
 					.closest('div')
-					.find('button[data-handler="bootstrap-markdown-cmdPreview"] span')
-				;
+					.find('button[data-handler="bootstrap-markdown-cmdPreview"] span'),
+				currentIconLib = e.$options.iconlibrary === 'glyph' ? 'glyphicon' : e.$options.iconlibrary;
+
+			previewButtonIcon.addClass(currentIconLib);
 
 			if (true === e.$isPreview) {
 				previewButtonIcon
-					.removeClass('glyphicon-search, glyphicon-eye-open')
-					.addClass('glyphicon-eye-close')
+					.removeClass(e.$options.iconlibraryOff.join(' ') + ' glyphicon-search glyphicon-eye-open fa-eye')
+					.addClass('glyphicon-eye-close fa-eye-slash')
 				;
 			} else {
 				previewButtonIcon
-					.removeClass('glyphicon-search, glyphicon-eye-close')
-					.addClass('glyphicon-eye-open')
+					.removeClass(e.$options.iconlibraryOff.join(' ') + ' glyphicon-search glyphicon-eye-close fa-eye-slash')
+					.addClass('glyphicon-eye-open fa-eye')
 				;
 			}
 		};
