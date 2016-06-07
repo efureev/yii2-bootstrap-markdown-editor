@@ -106,8 +106,6 @@ class MarkdownEditor extends InputWidget
     {
         $this->registerAdditionalButtons();
 
-        $this->clientOptions['additionalButtons'];
-
         $config = Json::encode(ArrayHelper::merge(
             $this->getClientOptionsDefaults(),
             $this->clientOptions
