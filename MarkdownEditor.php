@@ -25,6 +25,8 @@ class MarkdownEditor extends InputWidget
     /** @var string Icon library: fa | glyph | octicons  */
     public $icons = 'glyph';
 
+    public $autofocus = true;
+
     private $iconsLibs = [
         'glyph' => 'glyphicon',
         'fa' => 'fa',
@@ -119,7 +121,8 @@ class MarkdownEditor extends InputWidget
         unset($this->iconsLibs[$this->icons]);
 
         $this->clientOptions['iconlibraryOff'] = array_values($this->iconsLibs);
-
+        $this->clientOptions['autofocus'] = $this->autofocus;
+        
         $config = Json::encode(ArrayHelper::merge(
             $this->getClientOptionsDefaults(),
             $this->clientOptions
